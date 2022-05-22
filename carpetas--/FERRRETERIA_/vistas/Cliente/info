@@ -1,0 +1,36 @@
+<?php
+require './config/database.php';
+
+$db = new Database();
+$con = $db->conectar();
+$estado = false;
+if(isset($_POST['id'])){
+    $id = $_POST['id'];
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
+    $stock = $_POST['stock'];
+    $inventariable = isset($_POST['inventariable']) ? $_POST('inventariable') : 0;
+    if($stock == ''){
+        $stock =0;
+    }
+    $query = $con->prepare("UPDATE productos SET codigo = ?, descripcion=?,stock=?,inventariable=? WHERE id= ?");
+    $resultado = $query->execute(array($codigo,$descripcion,$stock, $inventariable));
+    if($resultado){
+        $estado= true;
+    }
+}else{
+    $id = $_POST['id'];
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
+    $stock = $_POST['stock'];
+    $inventariable = isset($_POST['inventariable']) ? $_POST('inventariable') : 0;
+    if($stock == ''){
+        $stock =0;
+    }
+    $query = $con->prepare("INSERT INTO  productos (codigo,descripcion,stock,inventariable, activo) values(:cod, :descr, :sto ,:inv, 1) ");
+    $resultado = $query->execute(array('cod'=>$codigo,'descr'=>$descripcion,'sto'=>$stock, 'inv'=>$inventariable));
+    if($resultado){
+        $estado= true;
+    }
+}
+?>
