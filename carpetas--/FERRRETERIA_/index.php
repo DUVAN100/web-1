@@ -1,3 +1,8 @@
+<?php
+require './config/database.php';
+$db = new Database();
+$con = $db -> conectar();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +17,6 @@
 
 </head>
 <p align="center">      
-         <a  class="btn btn-primary" type="button" href="./vistas/Productos/producto.php">Productos</a> 
+         <a  class="btn btn-primary" type="button" href="/vistas/Productos/producto.php">Productos</a> 
          <a  class="btn btn-primary" type="button" href="./vistas/Cliente/cliente.php">Cliente</a> 
-            
-
-          
-
 </html>

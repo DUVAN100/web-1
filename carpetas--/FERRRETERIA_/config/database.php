@@ -2,9 +2,9 @@
 class Database
 {
     private $hostname = "localhost";
-    private $database = "soluciones s a s";
+    private $database = "solusiones sas";
     private $username = "root";
-    private $password = " ";
+    private $password = "";
     function conectar()
     {
         try {

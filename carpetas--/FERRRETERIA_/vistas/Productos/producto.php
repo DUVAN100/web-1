@@ -1,12 +1,10 @@
 <?php
 require '../../config/database.php';
-
-$db = new Database();
+ $db = new Database();
 $con = $db->conectar();
-$activo = 1;
-$comando = $con->prepare("SELECT id, codigo, descripcion, stock FROM productos WHERE activo=:mi_activo ORDER BY codigo ASC");
-$comando->execute(['mi_activo' => $activo]);
+$comando = $con->prepare("SELECT * FROM productos");
 $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,11 +26,12 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
             <div class="row">
                 <div class="col-12">
                     <h4>Productos
-                        <a href="nuevo.php" class="btn btn-primary float-right">Nuevo</a>
+                        <a href="guardar.php" class="btn btn-primary float-right">Nuevo</a>
+                        <a href="eliminar.php" class="btn btn-warning">Eliminar</a>
+                        <a href="editar.php" class="btn btn-warning">Editar</a>
                     </h4>
                 </div>
             </div>
-
             <div class="row py-3">
                 <div class="col">
                     <table class="table table-border">
@@ -42,24 +41,23 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Código</th>
                                 <th>Descripción</th>
                                 <th>Stock</th>
-                                <th></th>
-                                <th></th>
+                                <th>valor compra</th>
+                                <th>valor venta</th>
                             </tr>
-                        </thead>
+                        </thead>         
+                         <?php
+                            foreach ($resultado as $row) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['codigo']; ?></td>
+                                    <td><?php echo $row['descripcion']; ?></td>
+                                    <td><?php echo $row['stock']; ?></td>
+                                </tr>
+                            <?php } ?>
 
                         <tbody>
-                        <?php
-                        foreach ($resultado as $row) {
-                            ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['codigo']; ?></td>
-                                <td><?php echo $row['descripcion']; ?></td>
-                                <td><?php echo $row['stock']; ?></td>
-                                <td><a href="editar.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Editar</a></td>
-                                <td><a href="eliminar.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Eliminar</a></td>
-                            </tr>
-                        <?php } ?>
+                        
                         </tbody>
                     </table>
                 </div>
