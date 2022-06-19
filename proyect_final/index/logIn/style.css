@@ -1,0 +1,16 @@
+.ImgBackground {
+    background-repeat: no-repeat, repeat;
+    display: block;
+  
+}
+.bar{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+#imgbar{
+    height:56px;
+}
+#fondo{
+    width: 100% !important;
+}
