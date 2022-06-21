@@ -1,18 +1,34 @@
 <?php
+include ("../../connection/database.php"); 
+if (isset($_GET['li'])) {
+    $li = $_GET['li'];
+    $id = $li;
+    $query ="SELECT * FROM productos WHERE li = '$li'";
+    $result = mysqli_query($conexion, $query);
+    if(mysqli_num_rows($result)==1){ 
+            $user =mysqli_fetch_assoc($result);
+			$ref_produc = $user['ref_produc']; 
+			$nom_produc = $user['nom_produc'];
+			$stock = $user['stock'];
+            $valor_compra = $user['valor_compra'];
+			$valor_venta = $user['valor_venta'];
+	}
+}
 
-require 'config/database.php';
-
-$id = $_GET['id'];
-$activo = 1;
-
-$query = $con->prepare("SELECT codigo, descripcion, stock, inventariable FROM productos WHERE id = :id AND activo = :activo"); 
-$query->execute(['id' => $id, 'activo' => $activo]);
-$num = $query->rowCount();
-
-if( $num > 0){
-    $row = $query->fetch(PDO::FETCH_ASSOC);
-} else {
-    header("Location: index.php");
+if (isset($_POST['registro'])) {
+    $li = $_GET['li'];
+    $ref_produc = $_POST['ref_produc']; 
+	$nom_produc = $_POST['nom_produc'];
+	$stock = $_POST['stock'];
+    $valor_compra = $_POST['valor_compra'];
+    $valor_venta = $_POST['valor_venta'];
+    $query = "UPDATE productos SET   ref_produc='$ref_produc', nom_produc='$nom_produc', stock='$stock', valor_compra='$valor_compra', valor_venta='$valor_venta' WHERE li ='$li'";
+    if(mysqli_query($conexion, $query)){
+        header('Location: productos.php');
+    }else{
+        print "Error al editar el producto";
+    }
+    
 }
 
 ?>
